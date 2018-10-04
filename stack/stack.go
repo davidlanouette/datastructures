@@ -31,16 +31,27 @@ func (s *Stack) Push(val interface{}) {
 	return
 }
 
-// Pop removes the most recently added value from the stack
+// Pop removes the most recently added value from the stack, and removes it from the top of the stack.
 func (s *Stack) Pop() (interface{}, error) {
 	s.traverse("--- before pop")
 
 	var element = s.head
+
+	// short circuit for cases of empty stack
+	if element == nil {
+		return nil, nil
+	}
+
 	s.head = element.nextElement
 	s.size--
 
 	s.traverse("--- after pop")
 	return element.element, nil
+}
+
+// Peek returns the most recently added value from the stack, but leaves it on the stack
+func (s *Stack) Peek() interface{} {
+	return s.head.element
 }
 
 // Size returns the number of elements in the stack
